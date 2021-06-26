@@ -5,14 +5,21 @@ class TasksController < ApplicationController
     @date = Date.today.strftime("%Y年%m月%d日")
     @quantity = Task.count
   end
+
   def new
     @task = Task.new
     @date = Date.today.strftime("%Y年%m月%d日")
+    @quantity = Task.count
+  end
+
+  def task_params
+    params.require(:task).permit(:title, :startdate, :finishtime, :allday, :memo)
   end
 
   def create
+    @quantity = Task.count
     @date = Date.today.strftime("%Y年%m月%d日")
-    @task= Task.new(params.require(:task).permit(:title, :startdate, :finishtime, :allday, :memo))
+    @task= Task.new(task_params)
     if @task.save
       flash[:notice] = "スケジュールを登録しました"
       redirect_to :tasks
@@ -23,20 +30,22 @@ class TasksController < ApplicationController
   end
 
   def show
+    @quantity = Task.count
     @date = Date.today.strftime("%Y年%m月%d日")
     @task = Task.find(params[:id])
   end
 
   def edit
+    @quantity = Task.count
     @date = Date.today.strftime("%Y年%m月%d日")
     @task = Task.find(params[:id])
-
   end
 
   def update
+    @quantity = Task.count
     @date = Date.today.strftime("%Y年%m月%d日")
     @task = Task.find(params[:id])
-    if @task.update(params.require(:task).permit(:title, :startdate, :finishtime, :allday, :memo))
+    if @task.update(task_params)
       flash[:notice] = "スケジュールを更新しました"
       redirect_to :tasks
     else
@@ -47,6 +56,7 @@ class TasksController < ApplicationController
 
   def destroy
     def destroy
+      @quantity = Task.count
       @task = Task.find(params[:id])
       @task.destroy
       flash[:notice] = "スケジュールを削除しました"
