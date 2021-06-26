@@ -1,0 +1,13 @@
+ja:
+  time:
+    formats:
+      default: "%Y年%m月%d日 %H時%M分"
+
+  activerecord:
+    models:
+      tasks: タスク
+    attributes:
+      task:
+        title: タイトル
+        startdate: 開始日
+        finishtime: 終了日
